@@ -83,8 +83,7 @@
   <div>
     <p>当前的用户：{{userInfo.username}}</p>
     <p>当前的角色： {{userInfo.role_name}}</p>
-    <p>分配新角色： 
-      <el-select v-model="selectedUserId" placeholder="请选择">
+    <p>分配新角色：  <el-select v-model="selectedUserId" placeholder="请选择">
         <el-option
           v-for="item in roleslist"
           :key="item.id"
@@ -209,10 +208,9 @@ export default {
       }
       this.roleslist = res.data.data
       this.setRoleDialogVisible = true
-      
     },
     saveRoleInfo: async function () {
-      if( !this.selectedUserId) {
+      if (!this.selectedUserId) {
         return this.$message.error('请选择需要分配的角色')
       }
       const res = await this.$http.put(`users/${this.userInfo.id}/role`, { rid: this.selectedUserId })
@@ -223,9 +221,9 @@ export default {
       this.getUserList()
       this.setRoleDialogVisible = false
     },
-    setRoleDialogClosed: function () { 
+    setRoleDialogClosed: function () {
       // 监听分配角色对话框关闭事件
-      this.selectedUserId =''
+      this.selectedUserId = ''
       this.userInfo = ''
     }
   }
