@@ -14,14 +14,24 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.bubble.css'
 import 'quill/dist/quill.snow.css'
 
+// import Echarts from 'vue-echarts/components/Echarts'
+// Vue.component('chart',Echarts)
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 // 配置请求的根路径
 axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
 
-// 配置axios拦截器，为请求头对象添加token的验证Authorization字段，这样有权限的API就可以正常调用成功了
+// 配置axios拦截器，为请求头对象添加token的验证Authorization字段，这样有权限的API就可以正常调用成功了，在request拦截器中展示进度条
 axios.interceptors.request.use((config) => {
+  NProgress.start()
   console.log(config)
   // 最后必须返回config
   config.headers.Authorization = window.sessionStorage.getItem('token')
+  return config
+})
+// 在response拦截器中隐藏进度条
+axios.interceptors.response.use((config) => {
+  NProgress.done()
   return config
 })
 Vue.prototype.$http = axios
